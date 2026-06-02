@@ -4,7 +4,7 @@ import java.util.*;
 
 public class MazeSolver {
 
-    // 0 = åben, 1 = mur
+    // 0 = open, 1 = wall
     static int[][] grid = {
             {0,0,0,1,0,0,0,1,0,0,0,0},
             {1,1,0,1,0,1,0,1,0,1,1,0},
@@ -23,7 +23,7 @@ public class MazeSolver {
     static final int ROWS = 12, COLS = 12;
 
     public static void main(String[] args) {
-        // Byg alle noder
+        // build all nodes
         MazeNode[][] nodes = new MazeNode[ROWS][COLS];
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
@@ -33,7 +33,7 @@ public class MazeSolver {
             }
         }
 
-        // Forbind naboer — urettede kanter i alle 4 retninger
+        // connect neighbours — undirected edges in all 4 directions
         int[][] directions = {{-1,0},{1,0},{0,-1},{0,1}};
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
@@ -82,7 +82,7 @@ public class MazeSolver {
             for (MazeNode next : current.node.getNeighbors()) {
                 if (visited.contains(next)) continue;
 
-                // Alle skridt koster 1 i en labyrint
+                // each step costs 1
                 int newDist = current.gCost + 1;
 
                 if (newDist < dist.getOrDefault(next, Integer.MAX_VALUE)) {
@@ -93,7 +93,7 @@ public class MazeSolver {
             }
         }
 
-        // Rekonstruer stien via prev
+        // reconstruct path via prev map
         List<String> path = new ArrayList<>();
         MazeNode step = destination;
         while (step != null) {
